@@ -18,7 +18,7 @@ export const ButtonLoadSomething = ({
     console.log("再描画中...", idx);
   });
   return (
-    <Button colorScheme="teal" size="md" onClick={loadSomething}>
+    <Button colorScheme="gray" size="md" onClick={loadSomething}>
       {isLoading ? (
         <CircularProgress isIndeterminate color="green.300" />
       ) : (
