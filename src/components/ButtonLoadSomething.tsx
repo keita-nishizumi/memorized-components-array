@@ -2,9 +2,16 @@ import React, { useEffect } from "react";
 import { Button, CircularProgress } from "@chakra-ui/react";
 import { useLoadSomething } from "../hooks/useLoadSomething";
 
-export const ButtonLoadSomething = () => {
+export const ButtonLoadSomething = ({
+  text,
+  idx,
+}: {
+  text: string;
+  idx: number;
+}) => {
   const { isLoading, loadSomething } = useLoadSomething();
   useEffect(() => {
+    console.log(text, "loading something...");
     loadSomething();
   }, []);
   return (
@@ -12,7 +19,7 @@ export const ButtonLoadSomething = () => {
       {isLoading ? (
         <CircularProgress isIndeterminate color="green.300" />
       ) : (
-        "done !"
+        text
       )}
     </Button>
   );
