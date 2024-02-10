@@ -15,9 +15,12 @@ function App() {
   const increment = () => setCount((prevCount) => prevCount + 1);
   const decrement = () => setCount((prevCount) => prevCount - 1);
 
+  // コンポーネントのpropsの配列を保持するref
   const prevButtonPropsArrRef = useRef<ButtonLoadSomethingProps[]>([]);
+  // 描画し終わったコンポーネントの配列を保持するref
   const prevButtonsRef = useRef<React.ReactNode[]>([]);
 
+  // コンポーネントのpropsの配列
   const buttonPropsArr: ButtonLoadSomethingProps[] = [...Array(count)].map(
     (_, idx) => {
       return {
@@ -28,18 +31,21 @@ function App() {
   );
   const buttons = buttonPropsArr.map((p, idx) => {
     if (!useMemolize) return <ButtonLoadSomething {...p} key={idx} />;
+
     let requireRerender = true;
     if (
       prevButtonPropsArrRef.current[idx] &&
       prevButtonsRef.current[idx] &&
       prevButtonPropsArrRef.current[idx].text === p.text // 再レンダリングするかどうかを判定する条件
     ) {
+      // 与えられたインデックスのものがすでにあり、かつpropsに変化が生じていなければ再レンダリング不要
       requireRerender = false;
     }
 
     return requireRerender ? (
       <ButtonLoadSomething {...p} key={idx} />
     ) : (
+      // 再レンダリング不要な場合、refから取り出して返却
       prevButtonsRef.current[idx]
     );
   });
