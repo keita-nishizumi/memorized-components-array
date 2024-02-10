@@ -2,18 +2,21 @@ import React, { useEffect } from "react";
 import { Button, CircularProgress } from "@chakra-ui/react";
 import { useLoadSomething } from "../hooks/useLoadSomething";
 
+export type ButtonLoadSomethingProps = {
+  text: string;
+  idx: number;
+};
 export const ButtonLoadSomething = ({
   text,
   idx,
-}: {
-  text: string;
-  idx: number;
-}) => {
+}: ButtonLoadSomethingProps) => {
   const { isLoading, loadSomething } = useLoadSomething();
   useEffect(() => {
-    console.log(text, "loading something...");
     loadSomething();
   }, []);
+  useEffect(() => {
+    console.log("再描画中...", idx);
+  });
   return (
     <Button colorScheme="teal" size="md" onClick={loadSomething}>
       {isLoading ? (
